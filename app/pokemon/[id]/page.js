@@ -54,9 +54,19 @@ export default async function PokemonDetail({ params }) {
         <tbody>
           <tr className="border-b border-gray-300">
             <th className="p-2 text-left">タイプ</th>
-            {/* 複数タイプはカンマ区切りで表示 */}
+            {/* タイプ別一覧へ遷移できるリンクとして表示 */}
             <td className="p-2">
-              {pokemon.types.map(t => t.type.name).join(', ')}
+              <div className="flex flex-wrap gap-2">
+                {pokemon.types.map((t) => (
+                  <a
+                    key={t.type.name}
+                    href={`/type/${t.type.name}`}
+                    className="text-blue-600 hover:underline"
+                  >
+                    {t.type.name}
+                  </a>
+                ))}
+              </div>
             </td>
           </tr>
           <tr className="border-b border-gray-300">
