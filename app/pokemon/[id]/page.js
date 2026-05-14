@@ -36,22 +36,22 @@ export default async function PokemonDetail({ params }) {
   const pokemon = await response.json();
 
   async function addToBookmarks() {
-    'use server';
+    'use server';// サーバーアクションとして定義。フォームの送信で呼び出される
 
-    const db = new Database('app.db');
+    const db = new Database('app.db');// SQLite データベースに接続
 
     try {
       const exists = db
-        .prepare('SELECT 1 FROM bookmarks WHERE pokemon_id = ? LIMIT 1')
-        .get(pokemon.id);
+        .prepare('SELECT 1 FROM bookmarks WHERE pokemon_id = ? LIMIT 1')// 既にブックマークされているか確認
+        .get(pokemon.id);// 存在しない場合は新規に挿入
 
-      if (!exists) {
-        db.prepare(
-          'INSERT INTO bookmarks (pokemon_id, pokemon_name, note) VALUES (?, ?, ?)'
-        ).run(pokemon.id, pokemon.name, '');
+      if (!exists) {// ブックマークテーブルに pokemon_id, pokemon_name, note を挿入
+        db.prepare(// SQL インジェクション対策のためプレースホルダを使用
+          'INSERT INTO bookmarks (pokemon_id, pokemon_name, note) VALUES (?, ?, ?)'// note は空文字で初期化
+        ).run(pokemon.id, pokemon.name, '');// ブックマークに追加された後、ユーザーをブックマーク一覧ページにリダイレクト
       }
-    } finally {
-      db.close();
+    } finally {// データベース接続を確実に閉じる
+      db.close();// データベース接続を閉じる
     }
 
     redirect('/bookmarks');
