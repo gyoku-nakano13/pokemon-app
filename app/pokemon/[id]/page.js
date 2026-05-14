@@ -1,6 +1,10 @@
 // app/pokemon/[id]/page.js
 // [id] は動的ルートセグメント。URL の /pokemon/1 などの数値が id として渡される
 
+import Database from 'better-sqlite3';
+import Link from 'next/link';
+import { redirect } from 'next/navigation';
+
 // generateMetadata: ページの <title> や OGP タグをサーバー側で動的に生成する関数
 export async function generateMetadata({ params }) {
   // URL パラメータから id を取得（Next.js 15以降、params は非同期）
@@ -31,12 +35,43 @@ export default async function PokemonDetail({ params }) {
   const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
   const pokemon = await response.json();
 
+  async function addToBookmarks() {
+    'use server';
+
+    const db = new Database('app.db');
+
+    try {
+      const exists = db
+        .prepare('SELECT 1 FROM bookmarks WHERE pokemon_id = ? LIMIT 1')
+        .get(pokemon.id);
+
+      if (!exists) {
+        db.prepare(
+          'INSERT INTO bookmarks (pokemon_id, pokemon_name, note) VALUES (?, ?, ?)'
+        ).run(pokemon.id, pokemon.name, '');
+      }
+    } finally {
+      db.close();
+    }
+
+    redirect('/bookmarks');
+  }
+
   return (
     <main className="p-8 max-w-xl mx-auto">
       {/* 一覧ページへ戻るリンク */}
-      <a href="/" className="text-blue-600 hover:underline">← 一覧に戻る</a>
+      <Link href="/" className="text-blue-600 hover:underline">
+        ← 一覧に戻る
+      </Link>
 
-      
+      <form action={addToBookmarks} className="mt-4 text-center">
+        <button
+          type="submit"
+          className="rounded-full bg-yellow-400 px-5 py-2 font-bold text-gray-900 shadow-sm transition hover:bg-yellow-300"
+        >
+          お気に入りに追加
+        </button>
+      </form>
 
       {/* ポケモンの公式アートワークと名前 */}
       <div className="text-center mt-4">

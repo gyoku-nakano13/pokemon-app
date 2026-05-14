@@ -13,7 +13,7 @@ export default async function Home() {
         <a href="/bookmarks" className="text-green-600 hover:underline">お気に入りポケモン →</a>
       </div>
       {/* タイプ別一覧へのショートカット */}
-      <div className="flex gap-4 mt-3 text-sm justify-around">
+      <div className="flex justify-end gap-4 mt-3 ml-auto mr-0 text-sm">
         <a href="/type/fire" className="text-red-500 hover:underline block">ほのおタイプ</a>
         <a href="/type/water" className="text-blue-500 hover:underline block">みずタイプ</a>
         <a href="/type/electric" className="text-yellow-500 hover:underline block">でんきタイプ</a>
