@@ -10,13 +10,13 @@ export default async function Home() {
     <main className="p-8">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">ポケモン図鑑</h1>
-        <a href="/bookmarks" className="text-blue-600 hover:underline">お気に入りポケモン →</a>
+        <a href="/bookmarks" className="text-green-600 hover:underline">お気に入りポケモン →</a>
       </div>
       {/* タイプ別一覧へのショートカット */}
-      <div className="flex gap-4 mt-3 text-sm justify-between">
-        <a href="/type/fire" className="text-red-600 hover:underline block">ほのおタイプ</a>
-        <a href="/type/water" className="text-blue-600 hover:underline block">みずタイプ</a>
-        <a href="/type/electric" className="text-yellow-600 hover:underline block">でんきタイプ</a>
+      <div className="flex gap-4 mt-3 text-sm justify-around">
+        <a href="/type/fire" className="text-red-500 hover:underline block">ほのおタイプ</a>
+        <a href="/type/water" className="text-blue-500 hover:underline block">みずタイプ</a>
+        <a href="/type/electric" className="text-yellow-500 hover:underline block">でんきタイプ</a>
       </div>
       {/* 4列グリッドでポケモンカードを並べる */}
       <div className="grid grid-cols-4 gap-4 mt-4">

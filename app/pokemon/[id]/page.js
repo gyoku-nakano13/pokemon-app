@@ -36,6 +36,8 @@ export default async function PokemonDetail({ params }) {
       {/* 一覧ページへ戻るリンク */}
       <a href="/" className="text-blue-600 hover:underline">← 一覧に戻る</a>
 
+      
+
       {/* ポケモンの公式アートワークと名前 */}
       <div className="text-center mt-4">
         <img

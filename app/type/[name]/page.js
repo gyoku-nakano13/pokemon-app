@@ -28,14 +28,14 @@ export default async function TypePage({ params }) {
   const typeData = await response.json();
 
   return (
-    <main className="p-8 max-w-3xl mx-auto">
+    <main className="p-8 ">
       <a href="/" className="text-blue-600 hover:underline">← 図鑑に戻る</a>
 
       <h1 className="text-2xl font-bold mt-4">{typeLabel}タイプ</h1>
       <p className="text-gray-600 mt-1">/type/{typeName}</p>
 
       <h2 className="text-xl font-bold mt-6">該当ポケモン</h2>
-      <ul className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-3">
+      <ul className="grid grid-cols-4 gap-4 mt-4">
         {typeData.pokemon.map((entry) => {
           // URL からポケモンIDを取り出して詳細リンクに使う
           const pokemonId = entry.pokemon.url.split('/').filter(Boolean).pop();
@@ -46,6 +46,15 @@ export default async function TypePage({ params }) {
                 href={`/pokemon/${pokemonId}`}
                 className="block border border-gray-300 rounded-lg p-3 hover:bg-gray-50 no-underline text-inherit"
               >
+                {/* GitHub の PokeAPI スプライトリポジトリから画像を取得 */}
+              <img
+                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`}
+                alt={entry.pokemon.name}
+                width={96}
+                height={96}
+              />
+              <p>No.{pokemonId}</p>
+              {/* capitalize で頭文字を大文字に表示 */}
                 <p className="font-bold capitalize">{entry.pokemon.name}</p>
               </a>
             </li>
